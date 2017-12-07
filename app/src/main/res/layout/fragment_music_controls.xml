@@ -4,7 +4,8 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:header="song_info"
-    app:content="music_view"
-    app:footer="playback_control"
+    app:header="@layout/song_info"
+    app:content="@layout/music_view"
+    app:footer="@layout/playback_controls"
+    android:background="@color/colorAccent"
     tools:context="com.aram.android.musicplayer.MusicControlsFragment"/>
