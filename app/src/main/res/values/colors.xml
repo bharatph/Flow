@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@android:color/white</color>
+    <color name="colorPrimaryDark">@android:color/darker_gray</color>
+    <color name="colorAccent">#3498db</color>
+
+    <color name="translucent">#91ffffff</color>
+    <color name="translucent_dark">#91000000</color>
+
+    <color name="error_light">#e74c3c</color>
+    <color name="error_dark">#c0392b</color>
+
+    <color name="success_light">#2ecc71</color>
+    <color name="success_dark">#27ae60</color>
+</resources>

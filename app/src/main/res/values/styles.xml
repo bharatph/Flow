@@ -1,0 +1,26 @@
+<resources>
+
+    <style name="AppTheme.MusicImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="background">@color/translucent_dark</item>
+        <item name="android:background">@color/translucent_dark</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/translucent_dark</item>
+        <item name="android:imageButtonStyle">@style/AppTheme.MusicImageButton</item>
+        <item name="imageButtonStyle">@style/AppTheme.MusicImageButton</item>
+    </style>
+
+
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+</resources>
