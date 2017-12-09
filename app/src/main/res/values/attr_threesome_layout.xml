@@ -1,7 +1,0 @@
-<resources>
-<declare-styleable name="ThreesomeLayout">
-    <attr name="header" format="reference" />
-    <attr name="content" format="reference" />
-    <attr name="footer" format="reference" />
-</declare-styleable>
-</resources>

@@ -1,4 +1,4 @@
-<com.aram.android.musicplayer.ThreesomeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.aram.android.musicplayer.TriLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
@@ -7,5 +7,8 @@
     app:header="@layout/song_info"
     app:content="@layout/music_view"
     app:footer="@layout/playback_controls"
+    app:headerHeight="0.2"
+    app:contentHeight="0.7"
+    app:footerHeight="0.1"
     android:background="@color/colorAccent"
     tools:context="com.aram.android.musicplayer.MusicControlsFragment"/>

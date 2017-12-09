@@ -1,0 +1,10 @@
+<resources>
+    <declare-styleable name="TriLayout">
+        <attr name="header" format="reference"/>
+        <attr name="content" format="reference"/>
+        <attr name="footer" format="reference"/>
+        <attr name="headerHeight" format="float"/>
+        <attr name="contentHeight" format="float"/>
+        <attr name="footerHeight" format="float"/>
+    </declare-styleable>
+</resources>
