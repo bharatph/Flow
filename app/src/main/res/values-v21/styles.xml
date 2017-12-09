@@ -2,7 +2,7 @@
 <resources>
 
     <style name="AppTheme.MusicImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:backgroundTint">@color/translucent_dark</item>
-        <item name="backgroundTint">@color/translucent_dark</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="backgroundTint">@android:color/transparent</item>
     </style>
 </resources>

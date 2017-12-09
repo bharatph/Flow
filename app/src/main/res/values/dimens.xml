@@ -18,8 +18,18 @@
     <dimen name="vertical_margin_large">32dp</dimen>
 
     <dimen name="text_size_small">14sp</dimen>
-    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_large">22sp</dimen>
 
     <dimen name="seekbar_size_large">214dp</dimen>
+
+    <dimen name="horizontal_padding_medium">24dp</dimen>
+
+    <dimen name="album_art_margin_horizontal">64dp</dimen>
+    <dimen name="album_art_margin_vertical">32dp</dimen>
+
+
+    <dimen name="text_fading_length">16dp</dimen>
+    <dimen name="max_text_artist_constraint_width">200dp</dimen>
+    <dimen name="max_text_song_constraint_width">215dp</dimen>
 </resources>

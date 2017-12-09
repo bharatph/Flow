@@ -2,12 +2,14 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:padding="@dimen/horizontal_padding_medium"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/navDownButton"
+            app:srcCompat="@drawable/down_arrow_key"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -17,20 +19,24 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/horizontal_padding_medium"
+            android:layout_marginRight="@dimen/horizontal_padding_medium"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/navDownButton"
-            app:layout_constraintRight_toLeftOf="@id/infoButton"
-            android:layout_margin="@dimen/horizontal_margin_small">
+            app:layout_constraintRight_toLeftOf="@id/infoButton">
 
             <TextView
                 android:id="@+id/textArtistName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="AR Rahman"
+                android:maxWidth="@dimen/max_text_artist_constraint_width"
+                android:singleLine="true"
+                android:requiresFadingEdge="horizontal"
+                android:fadingEdgeLength="@dimen/text_fading_length"
                 android:textAlignment="center"
-                android:textSize="@dimen/text_size_medium"
-                android:layout_margin="@dimen/horizontal_margin_small"
+                android:textSize="@dimen/text_size_small"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,10 +45,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Aalapooran Tamizhan"
+                android:text="Alaporan Tamizhan"
+                android:maxWidth="@dimen/max_text_song_constraint_width"
+                android:singleLine="true"
+                android:requiresFadingEdge="horizontal"
+                android:fadingEdgeLength="@dimen/text_fading_length"
+                android:ellipsize="none"
                 android:textAlignment="center"
-                android:textSize="@dimen/text_size_small"
-                android:layout_margin="@dimen/horizontal_margin_small"
+                android:textSize="@dimen/text_size_medium"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textArtistName"
@@ -51,9 +61,11 @@
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/infoButton"
+            app:srcCompat="@drawable/info"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:tint="#d5d5d5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </android.support.constraint.ConstraintLayout>

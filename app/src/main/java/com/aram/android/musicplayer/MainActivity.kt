@@ -1,6 +1,5 @@
 package com.aram.android.musicplayer
 
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 
 import android.support.v4.app.Fragment
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun getCount(): Int {
             // Show 3 total pages.
-            return 3
+            return 2
         }
     }
 }

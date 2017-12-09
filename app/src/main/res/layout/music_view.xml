@@ -1,11 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <com.aram.android.musicplayer.MusicView
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ccc"
-        app:exampleDrawable="@android:drawable/ic_menu_add"
-        app:exampleString="Hello, MusicView" />
-</RelativeLayout>
+        android:contentDescription="@string/app_name"
+        android:elevation="@dimen/vertical_margin_small"
+        android:paddingLeft="@dimen/album_art_margin_horizontal"
+        android:paddingRight="@dimen/album_art_margin_horizontal"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:src="@drawable/art"
+        app:layout_constraintBottom_toTopOf="@id/audioScrubber"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <rm.com.audiowave.AudioWaveView
+        android:id="@+id/audioScrubber"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:animateExpansion="true"
+        app:chunkWidth="3dp"
+        app:chunkHeight="24dp"
+        app:minChunkHeight="4dp"
+        app:chunkSpacing="3dp"
+        app:chunkRadius="2dp"
+        app:waveColor="@android:color/darker_gray"
+        android:layout_marginBottom="@dimen/vertical_margin_small"
+        android:layout_marginTop="@dimen/vertical_margin_small"
+        android:layout_marginRight="@dimen/horizontal_padding_medium"
+        android:layout_marginLeft="@dimen/horizontal_padding_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

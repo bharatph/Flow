@@ -1,8 +1,6 @@
 package com.aram.android.musicplayer;
 
 /*
- * Copyright (C) 2014 The Android Open Source Project
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -71,6 +69,7 @@ public class VerticalViewPager extends ViewPager {
         return ev;
     }
     private static final class VerticalPageTransformer implements ViewPager.PageTransformer {
+        private static float MIN_SCALE = 0.75f;
         @Override
         public void transformPage(View view, float position) {
             final int pageWidth = view.getWidth();
@@ -79,11 +78,15 @@ public class VerticalViewPager extends ViewPager {
                 // This page is way off-screen to the left.
                 view.setAlpha(0);
             } else if (position <= 1) {
-                view.setAlpha(1);
+                view.setAlpha(1 - position);
                 // Counteract the default slide transition
                 view.setTranslationX(pageWidth * -position);
                 // set Y position to swipe in from top
                 float yPosition = position * pageHeight;
+                float scaleFactor = MIN_SCALE
+                        + (1 - MIN_SCALE) * (1 - Math.abs(position));
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
                 view.setTranslationY(yPosition);
             } else {
                 // This page is way off-screen to the right.
