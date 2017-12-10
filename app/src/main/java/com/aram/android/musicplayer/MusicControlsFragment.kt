@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_music_controls.view.*
 import kotlinx.android.synthetic.main.music_view.view.*
 import java.util.*
 
@@ -22,7 +23,7 @@ class MusicControlsFragment : Fragment() {
         for(i in 0..99){
             barr[i] = Random().nextInt().toByte()
         }
-        rootView.audioScrubber.setRawData(barr)
+        rootView.audioWaveView.setRawData(barr)
         return rootView
     }
 

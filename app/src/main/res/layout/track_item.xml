@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:rowCount="1"
+    android:columnCount="3">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_medium"
+        android:padding="@dimen/horizontal_padding_medium"
+        android:id="@+id/trackNumber"
+        />
+    <TextView
+        android:layout_columnWeight="1"
+        android:textStyle="bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:requiresFadingEdge="horizontal"
+        android:fadingEdgeLength="@dimen/text_fading_length"
+        android:maxLines="1"
+        android:textSize="@dimen/text_size_medium"
+        android:padding="@dimen/horizontal_padding_medium"
+        android:id="@+id/trackName"
+        />
+    <TextView
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/text_size_medium"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/horizontal_padding_medium"
+        android:id="@+id/trackTime"
+        />
+</GridLayout>
