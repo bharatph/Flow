@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="app_bar_height">250dp</dimen>
+
 
     <dimen name="horizontal_constraint_small">8dp</dimen>
     <dimen name="vertical_constraint_small">8dp</dimen>

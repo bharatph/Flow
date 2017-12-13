@@ -1,13 +1,21 @@
 package com.aram.android.musicplayer
 
+import android.graphics.drawable.Drawable
+import android.media.Image
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.LinearSnapHelper
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SnapHelper
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import com.aram.android.musicplayer.adapter.AlbumCarouselAdapter
 import com.aram.android.musicplayer.adapter.SongListAdapter
+import kotlinx.android.synthetic.main.content_scrolling.view.*
 import kotlinx.android.synthetic.main.fragment_music_list.view.*
 
 /**
@@ -19,6 +27,22 @@ class MusicListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_music_list, container, false)
         //rootView.lol_label.text = getString(R.string.section_format, arguments.getInt(ARG_SECTION_NUMBER))
+        var albumArrayName: ArrayList<String> = arrayListOf(
+                "Prism",
+                "Roar",
+                "Hip Hop Tamilazh"
+        )
+        var albumArrayImage : ArrayList<Drawable> = arrayListOf(
+                context.getDrawable(R.drawable.art),
+                context.getDrawable(R.drawable.coverart),
+                context.getDrawable(R.drawable.star)
+        )
+
+        rootView.albumList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rootView.albumList.adapter = AlbumCarouselAdapter(context, albumArrayName, albumArrayImage)
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(rootView.albumList)
+
         var songArrayList : ArrayList<String> = arrayListOf(
                 "Roar",
                 "Piece of Me",

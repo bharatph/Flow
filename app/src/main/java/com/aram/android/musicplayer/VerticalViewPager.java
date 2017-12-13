@@ -78,7 +78,7 @@ public class VerticalViewPager extends ViewPager {
                 // This page is way off-screen to the left.
                 view.setAlpha(0);
             } else if (position <= 1) {
-                view.setAlpha((float) (1 - position*1.2));
+                view.setAlpha(1 - position);
                 // Counteract the default slide transition
                 view.setTranslationX(pageWidth * -position);
                 // set Y position to swipe in from top
