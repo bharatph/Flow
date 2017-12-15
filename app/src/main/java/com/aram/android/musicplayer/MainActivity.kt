@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
      * one of the sections/tabs/pages.
      */
     inner class SectionsPagerAdapter :  FragmentPagerAdapter{
-        lateinit var fm : FragmentManager
+        var fm : FragmentManager
         constructor(fm : FragmentManager) : super(fm){
             this.fm = fm
         }
@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             when(position) {
-                0 -> return MusicControlsFragment.newInstance()
+                0 -> return MusicOverviewFragment.newInstance()
+                1 -> return MusicControlsFragment.newInstance()
                 else -> {
                     val mlFragment : Fragment = MusicListFragment.newInstance()
                     /*
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getCount(): Int {
-            return 2
+            return 3
         }
     }
 }

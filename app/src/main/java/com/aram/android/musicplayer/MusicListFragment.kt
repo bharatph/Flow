@@ -6,13 +6,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.LinearSnapHelper
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SnapHelper
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.aram.android.musicplayer.adapter.AlbumCarouselAdapter
 import com.aram.android.musicplayer.adapter.SongListAdapter
 import kotlinx.android.synthetic.main.content_scrolling.view.*
@@ -33,13 +29,13 @@ class MusicListFragment : Fragment() {
                 "Hip Hop Tamilazh"
         )
         var albumArrayImage : ArrayList<Drawable> = arrayListOf(
-                context.getDrawable(R.drawable.art),
-                context.getDrawable(R.drawable.coverart),
-                context.getDrawable(R.drawable.star)
+                context!!.getDrawable(R.drawable.art),
+                context!!.getDrawable(R.drawable.coverart),
+                context!!.getDrawable(R.drawable.star)
         )
 
-        rootView.albumList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        rootView.albumList.adapter = AlbumCarouselAdapter(context, albumArrayName, albumArrayImage)
+        rootView.albumList.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
+        rootView.albumList.adapter = AlbumCarouselAdapter(context!!, albumArrayName, albumArrayImage)
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(rootView.albumList)
 
@@ -51,8 +47,8 @@ class MusicListFragment : Fragment() {
                 "Legendary Lovers",
                 getString(R.string.lorem_ipsum_small)
         )
-        rootView.songList.layoutManager = LinearLayoutManager(context)
-        rootView.songList.adapter = SongListAdapter(context, songArrayList)
+        rootView.songList.layoutManager = LinearLayoutManager(context!!)
+        rootView.songList.adapter = SongListAdapter(context!!, songArrayList)
         return rootView
     }
 

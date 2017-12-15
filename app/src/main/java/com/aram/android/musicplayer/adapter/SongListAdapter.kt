@@ -15,9 +15,11 @@ import kotlinx.android.synthetic.main.track_item.view.*
  */
 class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder> {
 
-    lateinit var trackList : ArrayList<String>
+    var trackList : ArrayList<String>
 
-    constructor( Context: Context, trackList : ArrayList<String>){
+    var context : Context
+    constructor( context: Context, trackList : ArrayList<String>){
+        this.context = context
         this.trackList = trackList
     }
 
@@ -37,9 +39,9 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
         return trackList.size
     }
     class SongListViewHolder : RecyclerView.ViewHolder {
-        lateinit var songNumber : TextView
-        lateinit var songName : TextView
-        lateinit var songTime : TextView
+        var songNumber : TextView
+        var songName : TextView
+        var songTime : TextView
         constructor(itemView : View) : super(itemView) {
             songNumber = itemView.findViewById(trackNumber)
             songName = itemView.findViewById(trackName)

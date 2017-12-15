@@ -16,10 +16,13 @@ import com.aram.android.musicplayer.R.layout.carousel_item
  */
 class AlbumCarouselAdapter : RecyclerView.Adapter<AlbumCarouselAdapter.AlbumCarouselViewHolder> {
 
-    lateinit var albumNameList: ArrayList<String>
-    lateinit var albumImageList: ArrayList<Drawable>
+    var albumNameList: ArrayList<String>
+    var albumImageList: ArrayList<Drawable>
 
-    constructor(Context: Context, albumNameList: ArrayList<String>, albumImageList:ArrayList<Drawable>){
+    var context : Context
+
+    constructor(context: Context, albumNameList: ArrayList<String>, albumImageList:ArrayList<Drawable>){
+        this.context = context
         this.albumNameList = albumNameList
         this.albumImageList = albumImageList
     }
@@ -39,8 +42,8 @@ class AlbumCarouselAdapter : RecyclerView.Adapter<AlbumCarouselAdapter.AlbumCaro
         return albumNameList.size
     }
     class AlbumCarouselViewHolder : RecyclerView.ViewHolder {
-        lateinit var albumName : TextView
-        lateinit var albumImage : ImageView
+        var albumName : TextView
+        var albumImage : ImageView
         constructor(itemView : View) : super(itemView) {
             albumName = itemView.findViewById(itemAlbumTextView)
             albumImage = itemView.findViewById(itemAlbumImageView)
