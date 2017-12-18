@@ -3,11 +3,11 @@
     <color name="colorPrimary">@android:color/white</color>
     <color name="colorPrimaryDark">@android:color/darker_gray</color>
     <color name="colorAccent">#3498db</color>
+    <color name="contrast_color">#d5d5d5</color>
 
     <color name="translucent">#91ffffff</color>
     <color name="translucent_dark">#91000000</color>
 
-    <color name="contrast_color">#d5d5d5</color>
 
     <color name="error_light">#e74c3c</color>
     <color name="error_dark">#c0392b</color>
