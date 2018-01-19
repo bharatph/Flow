@@ -1,4 +1,4 @@
-package com.aram.android.musicplayer
+package com.aram.android.flow
 
 import org.junit.Test
 

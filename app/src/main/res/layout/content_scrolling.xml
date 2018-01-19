@@ -8,11 +8,35 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/fragment_music_list">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/songList"
-        android:overScrollMode="never"
-        android:nestedScrollingEnabled="false"
+    <LinearLayout
+        android:layout_marginTop="@dimen/xxlarge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:paddingStart="@dimen/xxlarge"
+            android:paddingEnd="@dimen/xxlarge"
+            android:id="@+id/albumArtTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/large"
+            android:textStyle="bold" />
+        <TextView
+            android:paddingStart="@dimen/xxlarge"
+            android:paddingEnd="@dimen/xxlarge"
+            android:text="Katy Perry"
+            android:id="@+id/albumArtArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium"
+            android:textColor="@color/colorPrimaryDark"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/songList"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

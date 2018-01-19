@@ -1,12 +1,9 @@
-package com.aram.android.musicplayer
+package com.aram.android.flow
 
-import android.content.ContentResolver
 import android.content.Context
-import android.database.Cursor
-import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
-import com.aram.android.musicplayer.model.Song
+import com.aram.android.flow.model.Song
 
 /**
  * Created by bharatvaj on 17-12-2017.

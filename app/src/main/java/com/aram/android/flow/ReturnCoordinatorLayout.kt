@@ -1,4 +1,4 @@
-package com.aram.android.musicplayer
+package com.aram.android.flow
 
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout

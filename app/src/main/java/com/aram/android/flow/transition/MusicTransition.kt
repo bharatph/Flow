@@ -1,4 +1,4 @@
-package com.aram.android.musicplayer.transition
+package com.aram.android.flow.transition
 
 import android.support.transition.ChangeBounds
 import android.support.transition.ChangeImageTransform

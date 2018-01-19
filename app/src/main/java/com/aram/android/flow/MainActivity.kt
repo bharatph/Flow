@@ -1,4 +1,4 @@
-package com.aram.android.musicplayer
+package com.aram.android.flow
 
 import android.Manifest
 import android.content.pm.PackageManager

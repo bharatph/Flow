@@ -1,4 +1,4 @@
-package com.aram.android.musicplayer.adapter
+package com.aram.android.flow.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.aram.android.musicplayer.R.id.*
-import com.aram.android.musicplayer.R.layout.track_item
-import com.aram.android.musicplayer.model.Song
+import com.aram.android.flow.R.id.*
+import com.aram.android.flow.R.layout.track_item
+import com.aram.android.flow.model.Song
 
 /**
  * Created by bharatvaj on 11-12-2017.

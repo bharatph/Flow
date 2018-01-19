@@ -1,4 +1,4 @@
-package com.aram.android.musicplayer.model;
+package com.aram.android.flow.model;
 
 /**
  * Created by bharatvah on 17-12-2017.

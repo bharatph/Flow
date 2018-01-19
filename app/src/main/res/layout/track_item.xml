@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="@dimen/text_size_medium"
-        android:padding="@dimen/horizontal_padding_medium"
+        android:padding="@dimen/xxlarge"
         android:id="@+id/trackNumber"
         />
     <TextView
@@ -22,7 +22,7 @@
         android:fadingEdgeLength="@dimen/text_fading_length"
         android:maxLines="1"
         android:textSize="@dimen/text_size_medium"
-        android:padding="@dimen/horizontal_padding_medium"
+        android:padding="@dimen/xxlarge"
         android:id="@+id/trackName"
         />
     <TextView
@@ -32,7 +32,7 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/horizontal_padding_medium"
+        android:padding="@dimen/xxlarge"
         android:id="@+id/trackTime"
         />
 </GridLayout>
