@@ -1,32 +1,39 @@
 package com.aram.android.flow
 
 import android.Manifest
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
+import android.os.IBinder
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import com.aram.android.flow.service.MusicService
 
 import kotlinx.android.synthetic.main.activity_main.*
+import shortbread.Shortcut
+
+@Shortcut(id = "movies", icon = R.drawable.info, shortLabel = "Play")
 
 class MainActivity : AppCompatActivity() {
 
-    /**
-     * The [android.support.v4.view.PagerAdapter] that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * [android.support.v4.app.FragmentStatePagerAdapter].
-     */
 
-    val TAG = "MainActivity"
-    var REQUEST_WRITE_EXTERNAL_STORAGE = 0
+    private lateinit var mc: MusicController
+    private var musicService: MusicService? = null
+    private var playIntent: Intent? = null
+    private var musicBound = false
+
+
+    private val TAG = "MainActivity"
+    private val REQUEST_WRITE_EXTERNAL_STORAGE = 0
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<out String>,
@@ -45,10 +52,10 @@ class MainActivity : AppCompatActivity() {
 
     fun resolvePermissions() {
         if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
             } else {
                 ActivityCompat.requestPermissions(this,
@@ -71,10 +78,38 @@ class MainActivity : AppCompatActivity() {
         container.adapter = mSectionsPagerAdapter
     }
 
-    /**
-     * A [FragmentPagerAdapter] that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+
+    override fun onDestroy() {
+        stopService(playIntent)
+        super.onDestroy()
+    }
+
+
+    private var musicConnection: ServiceConnection = object : ServiceConnection {
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            musicBound = false
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            var binder: MusicService.MusicBinder = service as MusicService.MusicBinder
+            musicService = binder.getService()
+            musicService!!.setList(mc.getSongList())
+            musicBound = true
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mc = MusicController(this)
+        if (playIntent == null) {
+            playIntent = Intent(this, MusicService::class.java)
+            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE)
+            startService(playIntent)
+        }
+    }
+
     inner class SectionsPagerAdapter : FragmentPagerAdapter {
         var fm: FragmentManager
 
@@ -85,28 +120,15 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            when (position) {
-                0 -> return MusicOverviewFragment.newInstance()
-                1 -> return MusicControlsFragment.newInstance()
-                else -> {
-                    val mlFragment: Fragment = MusicListFragment.newInstance()
-                    /*
-                    mlFragment.sharedElementEnterTransition = MusicTransition()
-                    mlFragment.enterTransition = Fade()
-                    mlFragment.exitTransition = Fade()
-                    mlFragment.sharedElementReturnTransition = MusicTransition()
-                            fm.beginTransaction()
-                            .addSharedElement(albumArtImageView, "albumArtPreview")
-                            .replace(R.id.container, mlFragment)
-                            .commit()
-                            */
-                    return mlFragment
-                }
+            return when (position) {
+                0 -> MusicControlsFragment.newInstance()
+                1 -> MusicListFragment.newInstance()
+                else -> MusicOverviewFragment.newInstance()
             }
         }
 
         override fun getCount(): Int {
-            return 3
+            return 2
         }
     }
 }

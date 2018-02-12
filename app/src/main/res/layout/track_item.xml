@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
+<LinearLayout
+    android:background="@drawable/item_bg_click"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:rowCount="1"
-    android:columnCount="3">
+    android:padding="@dimen/tinyier"
+    android:orientation="horizontal">
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_size_medium"
-        android:padding="@dimen/xxlarge"
-        android:id="@+id/trackNumber"
-        />
-    <TextView
+        android:layout_weight="0.7"
         android:layout_columnWeight="1"
         android:textStyle="bold"
+        android:textColor="@color/item_fg_click"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:requiresFadingEdge="horizontal"
         android:fadingEdgeLength="@dimen/text_fading_length"
         android:maxLines="1"
         android:textSize="@dimen/text_size_medium"
-        android:padding="@dimen/xxlarge"
+        android:padding="@dimen/small"
         android:id="@+id/trackName"
         />
     <TextView
+        android:layout_weight="0.3"
         android:textColor="@color/contrast_color"
         android:textSize="@dimen/text_size_medium"
         android:gravity="center"
         android:textStyle="bold"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/xxlarge"
+        android:padding="@dimen/small"
         android:id="@+id/trackTime"
         />
-</GridLayout>
+</LinearLayout>

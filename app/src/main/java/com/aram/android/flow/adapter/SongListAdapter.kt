@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.aram.android.flow.R.id.*
 import com.aram.android.flow.R.layout.track_item
+import com.aram.android.flow.listener.RecyclerViewItemClickListener
 import com.aram.android.flow.model.Song
 
 /**
@@ -16,16 +17,20 @@ import com.aram.android.flow.model.Song
 class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder> {
 
     var songList: ArrayList<Song>
-
     var context: Context
+    val clickListener: RecyclerViewItemClickListener
 
-    constructor(context: Context, songList: ArrayList<Song>) {
+    constructor(context: Context, songList: ArrayList<Song>, clickListner: RecyclerViewItemClickListener) {
         this.context = context
         this.songList = songList
+        this.clickListener = clickListner
     }
 
     override fun onBindViewHolder(holder: SongListViewHolder?, position: Int) {
-        holder?.songNumber?.text = songList[position].id.toString()
+        //holder?.songNumber?.text = songList[position].id.toString()
+        holder?.rootView?.setOnClickListener (
+            View.OnClickListener { v -> clickListener.onClick(v, position) }
+            )
         holder?.songName?.text = songList[position].title
         holder?.songTime?.text = "01:23"
     }
@@ -40,13 +45,12 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
         return songList.size
     }
 
-    class SongListViewHolder : RecyclerView.ViewHolder {
-        var songNumber: TextView
+    inner class SongListViewHolder : RecyclerView.ViewHolder {
         var songName: TextView
         var songTime: TextView
-
+        var rootView: View
         constructor(itemView: View) : super(itemView) {
-            songNumber = itemView.findViewById(trackNumber)
+            rootView = itemView
             songName = itemView.findViewById(trackName)
             songTime = itemView.findViewById(trackTime)
         }

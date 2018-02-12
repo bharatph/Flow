@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/xxlarge"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
+    android:nestedScrollingEnabled="true"
     tools:showIn="@layout/fragment_music_list">
 
-    <LinearLayout
-        android:layout_marginTop="@dimen/xxlarge"
+    <TextView
+        android:id="@+id/albumArtTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/xxlarge"
+        android:layout_marginStart="@dimen/xxlarge"
+        android:layout_weight="0.05"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/albumArtArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/tiny"
+        android:layout_marginEnd="@dimen/xxlarge"
+        android:layout_marginStart="@dimen/xxlarge"
+        android:layout_marginTop="@dimen/tiniest"
+        android:layout_weight="0.05"
+        android:background="@android:color/black"
+        android:text="Katy Perry"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/medium" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/songList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:paddingStart="@dimen/xxlarge"
-            android:paddingEnd="@dimen/xxlarge"
-            android:id="@+id/albumArtTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/large"
-            android:textStyle="bold" />
-        <TextView
-            android:paddingStart="@dimen/xxlarge"
-            android:paddingEnd="@dimen/xxlarge"
-            android:text="Katy Perry"
-            android:id="@+id/albumArtArtist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/medium"
-            android:textColor="@color/colorPrimaryDark"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/songList"
-            android:overScrollMode="never"
-            android:nestedScrollingEnabled="false"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
+        android:layout_height="0dp"
+        android:layout_weight="0.9" />
+</LinearLayout>

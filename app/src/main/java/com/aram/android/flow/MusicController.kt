@@ -4,12 +4,13 @@ import android.content.Context
 import android.provider.MediaStore
 import android.util.Log
 import com.aram.android.flow.model.Song
+import com.aram.android.flow.service.MusicService
 
 /**
  * Created by bharatvaj on 17-12-2017.
  */
 
-internal class MusicController {
+class MusicController {
 
     val TAG = "MusicController"
     val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
@@ -27,19 +28,8 @@ internal class MusicController {
         this.context = context
     }
 
-
     companion object {
         var isPlaying = false
-    }
-
-    fun play(control: Boolean) {
-        if (control) {
-            //play music
-            MusicController.isPlaying = true
-        } else {
-            //pause music
-            MusicController.isPlaying = false
-        }
     }
 
     fun getSongList(): ArrayList<Song> {
@@ -58,7 +48,31 @@ internal class MusicController {
                 val thisID = musicCursor.getLong(idCol)
                 val thisTitle = musicCursor.getString(titleCol)
                 val thisArtist = musicCursor.getString(artistCol)
-                songList.add(Song(thisID, thisTitle, thisArtist))
+                songList.add(Song(thisID, null, thisTitle, thisArtist, null))
+                Log.i(TAG, thisTitle)
+
+            }
+        }
+        musicCursor.close()
+        return songList
+    }
+    fun getAlbumList(): ArrayList<Song> {
+        val musicCursor = context.contentResolver.query(
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                project,
+                selection,
+                null,
+                MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
+        val songList: ArrayList<Song> = ArrayList<Song>()
+        if (musicCursor != null) {
+            val idCol = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)
+            val titleCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
+            val artistCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
+            while (musicCursor.moveToNext()) {
+                val thisID = musicCursor.getLong(idCol)
+                val thisTitle = musicCursor.getString(titleCol)
+                val thisArtist = musicCursor.getString(artistCol)
+                songList.add(Song(thisID, null, thisTitle, thisArtist, null))
                 Log.i(TAG, thisTitle)
             }
         }
