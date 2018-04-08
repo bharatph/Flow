@@ -18,11 +18,14 @@ class MusicController {
             MediaStore.Audio.Media._ID,
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.TITLE,
+            MediaStore.Audio.Media.ALBUM,
             MediaStore.Audio.Media.DATA,
             MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.DURATION
     )
     var context: Context
+
+    var songs = ArrayList<Song>()
 
     constructor(context: Context) {
         this.context = context
@@ -39,44 +42,22 @@ class MusicController {
                 selection,
                 null,
                 MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
-        val songList: ArrayList<Song> = ArrayList<Song>()
+        songs = ArrayList<Song>()
         if (musicCursor != null) {
             val idCol = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)
             val titleCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
             val artistCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
+            val albumCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
             while (musicCursor.moveToNext()) {
                 val thisID = musicCursor.getLong(idCol)
                 val thisTitle = musicCursor.getString(titleCol)
                 val thisArtist = musicCursor.getString(artistCol)
-                songList.add(Song(thisID, null, thisTitle, thisArtist, null))
-                Log.i(TAG, thisTitle)
-
-            }
-        }
-        musicCursor.close()
-        return songList
-    }
-    fun getAlbumList(): ArrayList<Song> {
-        val musicCursor = context.contentResolver.query(
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                project,
-                selection,
-                null,
-                MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
-        val songList: ArrayList<Song> = ArrayList<Song>()
-        if (musicCursor != null) {
-            val idCol = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)
-            val titleCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
-            val artistCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
-            while (musicCursor.moveToNext()) {
-                val thisID = musicCursor.getLong(idCol)
-                val thisTitle = musicCursor.getString(titleCol)
-                val thisArtist = musicCursor.getString(artistCol)
-                songList.add(Song(thisID, null, thisTitle, thisArtist, null))
+                val thisAlbum = musicCursor.getString(albumCol)
+                songs.add(Song(thisID, null, thisTitle, thisAlbum, thisArtist, null))
                 Log.i(TAG, thisTitle)
             }
         }
         musicCursor.close()
-        return songList
+        return songs
     }
 }
