@@ -26,17 +26,11 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
         this.clickListener = clickListner
     }
 
-    override fun onBindViewHolder(holder: SongListViewHolder?, position: Int) {
-        //holder?.songNumber?.text = songList[position].id.toString()
-        holder?.rootView?.setOnClickListener (
-            View.OnClickListener { v -> clickListener.onClick(v, position) }
-            )
-        holder?.songName?.text = songList[position].title
-        holder?.songTime?.text = "01:23"
+    override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SongListViewHolder {
-        val itemView: View = LayoutInflater.from(parent?.context).inflate(track_item, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
+        val itemView: View = LayoutInflater.from(parent.context).inflate(track_item, parent, false)
         val songlistViewHolder = SongListViewHolder(itemView)
         return songlistViewHolder
     }

@@ -56,8 +56,8 @@ class MusicController {
                 songs.add(Song(thisID, null, thisTitle, thisAlbum, thisArtist, null))
                 Log.i(TAG, thisTitle)
             }
+            musicCursor.close()
         }
-        musicCursor.close()
         return songs
     }
 }

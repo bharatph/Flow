@@ -44,14 +44,14 @@ class MusicListFragment : Fragment() {
         )
 
         val albumArrayImage: ArrayList<Drawable> = arrayListOf(
-                context!!.getDrawable(R.drawable.art),
-                context!!.getDrawable(R.drawable.coverart),
-                context!!.getDrawable(R.drawable.star)
+                context!!.getDrawable(R.drawable.art)!!,
+                context!!.getDrawable(R.drawable.coverart)!!,
+                context!!.getDrawable(R.drawable.star)!!
         )
 
         rootView.albumList.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
         rootView.albumList.adapter = AlbumCarouselAdapter(context!!, albumArrayImage)
-        rootView.albumList.addOnPageChangedListener { p0, p1 ->
+        rootView.albumList.addOnPageChangedListener { _, p1 ->
             run {
                 rootView.albumArtTextView.text = albumArrayName[p1]
                 var songList = mc.getSongList()

@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions
  * Created by bharatvaj on 11-12-2017.
  */
 class AlbumCarouselAdapter : RecyclerView.Adapter<AlbumCarouselAdapter.AlbumCarouselViewHolder> {
+
     var albumImageList: ArrayList<Drawable>
     var reqOptions : RequestOptions
 
@@ -31,14 +32,14 @@ class AlbumCarouselAdapter : RecyclerView.Adapter<AlbumCarouselAdapter.AlbumCaro
         this.reqOptions = RequestOptions().placeholder(R.drawable.coverart).fitCenter().centerCrop()
     }
 
-    override fun onBindViewHolder(holder: AlbumCarouselViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: AlbumCarouselViewHolder, position: Int) {
         Glide.with(context)
                 .load(albumImageList[position])
                 .apply(reqOptions)
                 .into(holder?.albumImage!!)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): AlbumCarouselViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumCarouselViewHolder {
         val itemView : View = LayoutInflater.from(parent?.context).inflate(carousel_item, parent, false)
         return AlbumCarouselViewHolder(itemView)
     }
