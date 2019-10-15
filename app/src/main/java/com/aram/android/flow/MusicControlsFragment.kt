@@ -31,8 +31,6 @@ import java.util.*
 
 class MusicControlsFragment : Fragment() {
 
-
-    private lateinit var mc: MusicController
     private var musicService: MusicService? = null
     private var playIntent: Intent? = null
     private var musicBound = false
@@ -69,7 +67,7 @@ class MusicControlsFragment : Fragment() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             var binder: MusicService.MusicBinder = service as MusicService.MusicBinder
             musicService = binder.getService()
-            musicService!!.setList(mc.getSongList())
+//            musicService!!.setList(MusicController.getAllSongs())
             musicService!!.setOnPlayListener(object : EventListener {
                 override fun onEvent(obj: Any?) {
                     var song : Song = obj as Song
@@ -91,7 +89,6 @@ class MusicControlsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        mc = MusicController(context!!)
         if (playIntent == null) {
             playIntent = Intent(context, MusicService::class.java)
             context!!.bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE)

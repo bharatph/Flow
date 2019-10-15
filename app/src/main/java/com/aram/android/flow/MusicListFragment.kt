@@ -26,7 +26,6 @@ import java.util.*
  */
 class MusicListFragment : Fragment() {
 
-    private lateinit var mc: MusicController
     private var musicService: MusicService? = null
     private var playIntent: Intent? = null
     private var musicBound = false
@@ -36,44 +35,16 @@ class MusicListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_music_list, container, false)
 
-        var project = arrayOf (
-                MediaStore.Audio.AlbumColumns.ALBUM_ID,
-                MediaStore.Audio.AlbumColumns.ALBUM,
-//                MediaStore.Audio.AlbumColumns.NUMBER_OF_SONGS,
-                MediaStore.Audio.AlbumColumns.ARTIST
-        )
-        val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
+        val albums = AlbumLister.getAlbums(context)
 
-        val albums = ArrayList<Album>()
-
-        val albumCursor = context!!
-                .contentResolver
-                .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                        project,
-                        selection,
-                        null,
-                        MediaStore.Audio.Albums.DEFAULT_SORT_ORDER)
-        if(albumCursor != null){
-            val id = albumCursor.getColumnIndex(MediaStore.Audio.AlbumColumns.ALBUM_ID)
-            val name = albumCursor.getColumnIndex(MediaStore.Audio.AlbumColumns.ALBUM)
-//            val noOfSongs = albumCursor.getColumnIndex(MediaStore.Audio.AlbumColumns.NUMBER_OF_SONGS)
-            val artist = albumCursor.getColumnIndex(MediaStore.Audio.AlbumColumns.ARTIST)
-            while(albumCursor.moveToNext()){
-                val albumId = albumCursor.getLong(id)
-                val albumName = albumCursor.getString(name)
-                val numberOfSongs = 0
-                val artists = albumCursor.getString(artist)
-                albums.add(Album(albumId, albumName, arrayListOf(artists),numberOfSongs))
-            }
-        }
-        albumCursor?.close()
 
         rootView.albumList.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
         rootView.albumList.adapter = AlbumCarouselAdapter(context!!, albums)
         rootView.albumList.addOnPageChangedListener { _, p1 ->
             run {
                 rootView.albumArtTextView.text = albums[p1].name
-                var songList = mc.getSongList()
+                rootView.albumArtArtist.text = albums[p1].artists
+                var songList = MusicController.getSongsForAlbum(context, albums[p1])
                 musicService?.setList(songList)
                 rootView.songList.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
                 rootView.songList.adapter = SongListAdapter(context!!, songList, RecyclerViewItemClickListener { _, position ->
@@ -82,7 +53,6 @@ class MusicListFragment : Fragment() {
                 })
             }
         }
-        //TODO END
 
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(rootView.albumList)
@@ -100,7 +70,7 @@ class MusicListFragment : Fragment() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             var binder: MusicService.MusicBinder = service as MusicService.MusicBinder
             musicService = binder.getService()
-            musicService!!.setList(mc.getSongList())//TODO Tech dept
+            musicService?.setList(MusicController.getAllSongs(context))//TODO Tech dept
             musicBound = true
         }
 
@@ -108,7 +78,6 @@ class MusicListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        mc = MusicController(context!!)
         if (playIntent == null) {
             playIntent = Intent(context, MusicService::class.java)
             context!!.bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE)

@@ -20,6 +20,7 @@
         android:id="@+id/albumArtImageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/horizontal_constraint_large"
         android:contentDescription="@string/app_name"
         android:layout_marginTop="@dimen/album_art_padding_vertical"
         android:layout_marginBottom="@dimen/album_art_padding_vertical"

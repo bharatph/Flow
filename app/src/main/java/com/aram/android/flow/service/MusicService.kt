@@ -26,11 +26,11 @@ public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlay
     private var playListener: EventListener? = null
 
     public fun initMusicPlayer() {
-        player?.setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
-        player?.setAudioStreamType(AudioManager.STREAM_MUSIC)
-        player?.setOnPreparedListener(this)
-        player?.setOnErrorListener(this)
-        player?.setOnCompletionListener(this)
+        player.setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC)
+        player.setOnPreparedListener(this)
+        player.setOnErrorListener(this)
+        player.setOnCompletionListener(this)
     }
 
     override fun onCreate() {
@@ -70,10 +70,12 @@ public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlay
 
     fun playSong() {
         player.reset()
-        var song: Song = songs!!.get(songPos)
+        var song: Song? = songs?.get(songPos)
+        if(song == null){
+            return
+        }
         var currSong = song.id
         var trackUri: Uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, currSong)
-        song.trackUri = trackUri //FIXME
         try {
             player.setDataSource(applicationContext, trackUri)
             playListener?.onEvent(song)

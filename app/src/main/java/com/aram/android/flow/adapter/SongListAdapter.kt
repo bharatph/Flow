@@ -27,12 +27,14 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
     }
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
+        val song = songList[position]
+        holder.songName.text = song.title
+        holder.songTime.text = song.duration.toString()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(track_item, parent, false)
-        val songlistViewHolder = SongListViewHolder(itemView)
-        return songlistViewHolder
+        return SongListViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
