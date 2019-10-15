@@ -10,8 +10,7 @@ import android.os.Binder
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
-import android.view.View
-import com.aram.android.flow.listener.EventListener
+import com.aram.android.flow.listener.OnSongSelectListener
 import com.aram.android.flow.model.Song
 
 /**
@@ -19,18 +18,19 @@ import com.aram.android.flow.model.Song
  */
 public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
+    var song: Song? = null
     private val musicBinder: IBinder = MusicBinder()
     private var player: MediaPlayer = MediaPlayer()
     private var songs: ArrayList<Song>? = null
     private var songPos: Int = 0
-    private var playListener: EventListener? = null
+    var onSongSelectListener: OnSongSelectListener? = null
 
     public fun initMusicPlayer() {
-        player?.setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
-        player?.setAudioStreamType(AudioManager.STREAM_MUSIC)
-        player?.setOnPreparedListener(this)
-        player?.setOnErrorListener(this)
-        player?.setOnCompletionListener(this)
+        player.setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC)
+        player.setOnPreparedListener(this)
+        player.setOnErrorListener(this)
+        player.setOnCompletionListener(this)
     }
 
     override fun onCreate() {
@@ -60,25 +60,16 @@ public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlay
         mp.start()
     }
 
-    fun setSong(index: Int) {
-        songPos = index
-    }
-
-    fun setOnPlayListener(listener: EventListener){
-        this.playListener = listener
-    }
-
-    fun playSong() {
-        player.reset()
-        var song: Song = songs!!.get(songPos)
-        var currSong = song.id
-        var trackUri: Uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, currSong)
-        song.trackUri = trackUri //FIXME
+    fun playSong(song: Song) {
+        if (player.isPlaying){
+            player.reset()
+        }
+        var trackUri: Uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, song.id)
         try {
             player.setDataSource(applicationContext, trackUri)
-            playListener?.onEvent(song)
+            onSongSelectListener?.onSongSelect(song)
         } catch (e: Exception) {
-            Log.e("MUSIC SERVICE", "Error setting date source", e)
+            Log.e("MUSIC SERVICE", "Error setting data source", e)
         }
         player.prepareAsync()
     }

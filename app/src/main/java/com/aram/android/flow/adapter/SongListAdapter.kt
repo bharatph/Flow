@@ -1,7 +1,7 @@
 package com.aram.android.flow.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +10,7 @@ import com.aram.android.flow.R.id.*
 import com.aram.android.flow.R.layout.track_item
 import com.aram.android.flow.listener.RecyclerViewItemClickListener
 import com.aram.android.flow.model.Song
+import com.aram.android.flow.util.Time
 
 /**
  * Created by bharatvaj on 11-12-2017.
@@ -20,33 +21,34 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
     var context: Context
     val clickListener: RecyclerViewItemClickListener
 
-    constructor(context: Context, songList: ArrayList<Song>, clickListner: RecyclerViewItemClickListener) {
+    constructor(context: Context, songList: ArrayList<Song>, clickListener: RecyclerViewItemClickListener) {
         this.context = context
         this.songList = songList
-        this.clickListener = clickListner
+        this.clickListener = clickListener
     }
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
+        val song = songList[position]
+        holder.rootView.setOnClickListener {
+            clickListener.onClick(holder.rootView, position)
+        }
+        holder.songName.text = song.title
+        holder.songTime.text = Time.millisToString(song.duration)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(track_item, parent, false)
-        val songlistViewHolder = SongListViewHolder(itemView)
-        return songlistViewHolder
+        return SongListViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
         return songList.size
     }
 
-    inner class SongListViewHolder : RecyclerView.ViewHolder {
-        var songName: TextView
-        var songTime: TextView
-        var rootView: View
-        constructor(itemView: View) : super(itemView) {
-            rootView = itemView
-            songName = itemView.findViewById(trackName)
-            songTime = itemView.findViewById(trackTime)
-        }
+    inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var songName: TextView = itemView.findViewById(trackName)
+        var songTime: TextView = itemView.findViewById(trackTime)
+        var rootView: View = itemView
+
     }
 }

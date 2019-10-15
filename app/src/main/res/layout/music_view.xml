@@ -1,8 +1,9 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_music_controls"
     android:rowCount="2"
     android:columnCount="1">
 
@@ -23,7 +24,6 @@
         android:layout_above="@id/timerTextView" />
     <TextView
         android:id="@+id/timerTextView"
-        android:text="01:23"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/horizontal_padding_medium"
         android:layout_marginBottom="@dimen/vertical_margin_small"

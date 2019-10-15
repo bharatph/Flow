@@ -1,21 +1,21 @@
 package com.aram.android.flow
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
+import android.content.*
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.LinearSnapHelper
+import android.provider.MediaStore
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.aram.android.flow.adapter.AlbumCarouselAdapter
 import com.aram.android.flow.adapter.SongListAdapter
 import com.aram.android.flow.listener.RecyclerViewItemClickListener
+import com.aram.android.flow.model.Album
 import com.aram.android.flow.service.MusicService
 import kotlinx.android.synthetic.main.content_scrolling.view.*
 import kotlinx.android.synthetic.main.fragment_music_list.view.*
@@ -26,7 +26,6 @@ import java.util.*
  */
 class MusicListFragment : Fragment() {
 
-    private lateinit var mc: MusicController
     private var musicService: MusicService? = null
     private var playIntent: Intent? = null
     private var musicBound = false
@@ -36,34 +35,23 @@ class MusicListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_music_list, container, false)
 
-        //TODO Get Input from Android
-        val albumArrayName: ArrayList<String> = arrayListOf(
-                "Prism",
-                "Roar",
-                "The Weekend"
-        )
+        val albums = AlbumLister.getAlbums(context)
 
-        val albumArrayImage: ArrayList<Drawable> = arrayListOf(
-                context!!.getDrawable(R.drawable.art)!!,
-                context!!.getDrawable(R.drawable.coverart)!!,
-                context!!.getDrawable(R.drawable.star)!!
-        )
 
         rootView.albumList.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
-        rootView.albumList.adapter = AlbumCarouselAdapter(context!!, albumArrayImage)
+        rootView.albumList.adapter = AlbumCarouselAdapter(context!!, albums)
         rootView.albumList.addOnPageChangedListener { _, p1 ->
             run {
-                rootView.albumArtTextView.text = albumArrayName[p1]
-                var songList = mc.getSongList()
+                rootView.albumArtTextView.text = albums[p1].name
+                rootView.albumArtArtist.text = albums[p1].artists
+                var songList = MusicController.getSongsForAlbum(context, albums[p1])
                 musicService?.setList(songList)
                 rootView.songList.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
                 rootView.songList.adapter = SongListAdapter(context!!, songList, RecyclerViewItemClickListener { _, position ->
-                    musicService?.setSong(position)
-                    musicService?.playSong()
+                    musicService?.playSong(songList[position])
                 })
             }
         }
-        //TODO END
 
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(rootView.albumList)
@@ -81,7 +69,7 @@ class MusicListFragment : Fragment() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             var binder: MusicService.MusicBinder = service as MusicService.MusicBinder
             musicService = binder.getService()
-            musicService!!.setList(mc.getSongList())//TODO Tech dept
+            musicService?.setList(MusicController.getAllSongs(context))//TODO Tech dept
             musicBound = true
         }
 
@@ -89,7 +77,6 @@ class MusicListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        mc = MusicController(context!!)
         if (playIntent == null) {
             playIntent = Intent(context, MusicService::class.java)
             context!!.bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE)

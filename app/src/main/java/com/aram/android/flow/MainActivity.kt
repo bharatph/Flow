@@ -1,20 +1,18 @@
 package com.aram.android.flow
 
 import android.Manifest
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
+import android.content.*
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
+import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import android.os.Bundle
 import android.os.IBinder
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.util.Log
 import com.aram.android.flow.service.MusicService
 
@@ -94,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             var binder: MusicService.MusicBinder = service as MusicService.MusicBinder
             musicService = binder.getService()
-            musicService!!.setList(mc.getSongList())
+//            musicService!!.setList(MusicController.getAllSongs(service.getServ))
             musicBound = true
         }
 
@@ -102,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        mc = MusicController(this)
+//        mc = MusicController(this)
         if (playIntent == null) {
             playIntent = Intent(this, MusicService::class.java)
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE)
@@ -116,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         constructor(fm: FragmentManager) : super(fm) {
             this.fm = fm
         }
+
 
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
