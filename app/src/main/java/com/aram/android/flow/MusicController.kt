@@ -19,7 +19,6 @@ class MusicController {
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.ALBUM,
-            MediaStore.Audio.Media.DATA,
             MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.DURATION
     )
@@ -42,7 +41,7 @@ class MusicController {
                 selection,
                 null,
                 MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
-        songs = ArrayList<Song>()
+        songs = ArrayList()
         if (musicCursor != null) {
             val idCol = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)
             val titleCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
@@ -54,7 +53,6 @@ class MusicController {
                 val thisArtist = musicCursor.getString(artistCol)
                 val thisAlbum = musicCursor.getString(albumCol)
                 songs.add(Song(thisID, null, thisTitle, thisAlbum, thisArtist, null))
-                Log.i(TAG, thisTitle)
             }
             musicCursor.close()
         }
