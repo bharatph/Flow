@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/horizontal_padding_medium">
     <TextView
-        android:text="@string/lorem_ipsum_small"
+        tools:text="@tools:sample/lorem/random"
         android:gravity="center"
         android:maxLines="2"
         android:requiresFadingEdge="vertical"

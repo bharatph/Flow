@@ -19,8 +19,6 @@
         android:layout_marginEnd="@dimen/xxlarge"
         android:layout_marginStart="@dimen/xxlarge"
         android:layout_weight="0.05"
-        android:background="@android:color/black"
-        android:textColor="@android:color/white"
         android:textSize="@dimen/large"
         android:textStyle="bold" />
 
@@ -28,14 +26,10 @@
         android:id="@+id/albumArtArtist"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/tiny"
         android:layout_marginEnd="@dimen/xxlarge"
         android:layout_marginStart="@dimen/xxlarge"
         android:layout_marginTop="@dimen/tiniest"
         android:layout_weight="0.05"
-        android:background="@android:color/black"
-        android:text="Katy Perry"
-        android:textColor="@android:color/white"
         android:textSize="@dimen/medium" />
 
     <androidx.recyclerview.widget.RecyclerView

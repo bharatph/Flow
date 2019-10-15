@@ -28,7 +28,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/songInfo"
         app:layout_constraintBottom_toTopOf="@id/musicView"
-        android:src="@drawable/art" />
+        
+        android:src="@drawable/ic_music" />
 
     <include
         android:id="@+id/musicView"

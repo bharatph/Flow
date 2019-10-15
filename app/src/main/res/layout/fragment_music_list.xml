@@ -62,8 +62,8 @@
                     android:orientation="horizontal"
                     android:layout_weight="0.75"
                     android:clipToPadding="false"
-                    android:paddingLeft="@dimen/tiny"
-                    android:paddingRight="@dimen/horizontal_margin_large"
+                    android:paddingStart="@dimen/tiny"
+                    android:paddingEnd="@dimen/horizontal_margin_large"
                     app:rvp_singlePageFling="false"
                     app:rvp_triggerOffset="0.1" />
 

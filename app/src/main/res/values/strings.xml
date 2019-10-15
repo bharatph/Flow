@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">Music Player</string>
+    <string name="app_name">Flow</string>
     <string name="action_settings">Settings</string>
     <string name="button_shuffle_hint">Shuffle</string>
     <string name="button_repeat_hint">Repeat</string>
     <string name="music_album">Album</string>
     <string name="music_artist">Artist</string>
-    <string name="lorem_ipsum_small">Lorem ipsum dolor sit amet, consectetur adipiscing elitFusce sollicitudin et ipsum vel porta. Pellentesque convallis lorem egestas elit pulvinar condimentum ut eget velit. Curabitur eu nulla libero. Mauris sit amet ligula non velit fringilla suscipit condimentum vitae quam. Vestibulum facilisis nulla et egestas sodales. Aliquam tempor tincidunt magna, ac euismod diam luctus in. Phasellus lacinia mattis urna a malesuada. Sed pretium bibendum ligula, quis congue sapien viverra ac. Vivamus hendrerit faucibus sem id eleifend. Etiam accumsan, nulla eu blandit convallis, augue urna finibus est, nec ornare ante ipsum et dolor. Integer vulputate convallis magna eget commodo. Sed posuere, nibh in hendrerit condimentum, dui velit eleifend purus, eu viverra eros quam et lorem. Praesent ac condimentum enim.</string>
 </resources>
