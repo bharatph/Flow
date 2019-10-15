@@ -10,6 +10,7 @@ import com.aram.android.flow.R.id.*
 import com.aram.android.flow.R.layout.track_item
 import com.aram.android.flow.listener.RecyclerViewItemClickListener
 import com.aram.android.flow.model.Song
+import com.aram.android.flow.util.Time
 
 /**
  * Created by bharatvaj on 11-12-2017.
@@ -20,10 +21,10 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
     var context: Context
     val clickListener: RecyclerViewItemClickListener
 
-    constructor(context: Context, songList: ArrayList<Song>, clickListner: RecyclerViewItemClickListener) {
+    constructor(context: Context, songList: ArrayList<Song>, clickListener: RecyclerViewItemClickListener) {
         this.context = context
         this.songList = songList
-        this.clickListener = clickListner
+        this.clickListener = clickListener
     }
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
@@ -32,7 +33,7 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
             clickListener.onClick(holder.rootView, position)
         }
         holder.songName.text = song.title
-        holder.songTime.text = song.duration.toString()
+        holder.songTime.text = Time.millisToString(song.duration)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {

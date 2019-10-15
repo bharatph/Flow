@@ -1,6 +1,7 @@
 package com.aram.android.flow
 
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
@@ -21,11 +22,34 @@ object MusicController {
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.ALBUM,
+            MediaStore.Audio.Media.ALBUM_ID,
             MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.DURATION
     )
 
     var isPlaying = false
+
+    fun getSongs(musicCursor: Cursor?) :  ArrayList<Song> {
+        var songs = ArrayList<Song>()
+        if(musicCursor == null ) return songs
+        val idCol = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)
+        val albumIdCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)
+        val titleCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
+        val artistCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
+        val albumCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
+        val durationCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION)
+        while (musicCursor.moveToNext()) {
+            val thisID = musicCursor.getLong(idCol)
+            val thisAlbumId = musicCursor.getLong(albumIdCol)
+            val thisTitle = musicCursor.getString(titleCol)
+            val thisArtist = musicCursor.getString(artistCol)
+            val thisAlbum = musicCursor.getString(albumCol)
+            val thisDuration = musicCursor.getLong(durationCol)
+            songs.add(Song(thisID, thisAlbumId, thisTitle, thisAlbum, thisArtist, thisDuration))
+        }
+        musicCursor.close()
+        return songs
+    }
 
     fun getAllSongs(context: Context?): ArrayList<Song> {
         val musicCursor = context?.contentResolver?.query(
@@ -34,22 +58,7 @@ object MusicController {
                 selection,
                 null,
                 MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
-        val songs = ArrayList<Song>()
-        if (musicCursor != null) {
-            val idCol = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)
-            val titleCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
-            val artistCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
-            val albumCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
-            while (musicCursor.moveToNext()) {
-                val thisID = musicCursor.getLong(idCol)
-                val thisTitle = musicCursor.getString(titleCol)
-                val thisArtist = musicCursor.getString(artistCol)
-                val thisAlbum = musicCursor.getString(albumCol)
-                songs.add(Song(thisID, thisTitle, thisAlbum, thisArtist, null))
-            }
-            musicCursor.close()
-        }
-        return songs
+        return getSongs(musicCursor)
     }
 
     fun getSongsForAlbum(context: Context?, album: Album) : ArrayList<Song> {
@@ -60,21 +69,6 @@ object MusicController {
                 selection,
                 null,
                 MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
-        var songs = ArrayList<Song>()
-        if (musicCursor != null) {
-            val idCol = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)
-            val titleCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
-            val artistCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
-            val albumCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
-            while (musicCursor.moveToNext()) {
-                val thisID = musicCursor.getLong(idCol)
-                val thisTitle = musicCursor.getString(titleCol)
-                val thisArtist = musicCursor.getString(artistCol)
-                val thisAlbum = musicCursor.getString(albumCol)
-                songs.add(Song(thisID, thisTitle, thisAlbum, thisArtist, null))
-            }
-            musicCursor.close()
-        }
-        return songs
+        return getSongs(musicCursor)
     }
 }
