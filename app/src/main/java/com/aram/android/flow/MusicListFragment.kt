@@ -48,8 +48,7 @@ class MusicListFragment : Fragment() {
                 musicService?.setList(songList)
                 rootView.songList.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
                 rootView.songList.adapter = SongListAdapter(context!!, songList, RecyclerViewItemClickListener { _, position ->
-                    musicService?.setSong(position)
-                    musicService?.playSong()
+                    musicService?.playSong(songList[position])
                 })
             }
         }

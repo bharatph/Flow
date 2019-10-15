@@ -13,12 +13,14 @@ import android.util.Log
 import android.view.View
 import com.aram.android.flow.listener.EventListener
 import com.aram.android.flow.model.Song
+import java.net.URI
 
 /**
  * Created by Home on 21-01-2018.
  */
 public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
+    var song: Song? = null
     private val musicBinder: IBinder = MusicBinder()
     private var player: MediaPlayer = MediaPlayer()
     private var songs: ArrayList<Song>? = null
@@ -60,27 +62,20 @@ public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlay
         mp.start()
     }
 
-    fun setSong(index: Int) {
-        songPos = index
-    }
-
     fun setOnPlayListener(listener: EventListener){
         this.playListener = listener
     }
 
-    fun playSong() {
-        player.reset()
-        var song: Song? = songs?.get(songPos)
-        if(song == null){
-            return
+    fun playSong(song: Song) {
+        if (player.isPlaying){
+            player.reset()
         }
-        var currSong = song.id
-        var trackUri: Uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, currSong)
+        var trackUri: Uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, song.id)
         try {
             player.setDataSource(applicationContext, trackUri)
             playListener?.onEvent(song)
         } catch (e: Exception) {
-            Log.e("MUSIC SERVICE", "Error setting date source", e)
+            Log.e("MUSIC SERVICE", "Error setting data source", e)
         }
         player.prepareAsync()
     }

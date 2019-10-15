@@ -28,6 +28,9 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
         val song = songList[position]
+        holder.rootView.setOnClickListener {
+            clickListener.onClick(holder.rootView, position)
+        }
         holder.songName.text = song.title
         holder.songTime.text = song.duration.toString()
     }
@@ -41,14 +44,10 @@ class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>
         return songList.size
     }
 
-    inner class SongListViewHolder : RecyclerView.ViewHolder {
-        var songName: TextView
-        var songTime: TextView
-        var rootView: View
-        constructor(itemView: View) : super(itemView) {
-            rootView = itemView
-            songName = itemView.findViewById(trackName)
-            songTime = itemView.findViewById(trackTime)
-        }
+    inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var songName: TextView = itemView.findViewById(trackName)
+        var songTime: TextView = itemView.findViewById(trackTime)
+        var rootView: View = itemView
+
     }
 }
