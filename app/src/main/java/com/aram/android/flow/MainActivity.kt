@@ -14,9 +14,12 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import android.util.Log
+import com.aram.android.flow.listener.OnDownPressedListener
 import com.aram.android.flow.service.MusicService
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_music_controls.*
+import kotlinx.android.synthetic.main.song_info.*
 import shortbread.Shortcut
 
 @Shortcut(id = "movies", icon = R.drawable.info, shortLabel = "Play")
@@ -70,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         MusicControlsFragment.newInstance()
         MusicListFragment.newInstance()
 
-        val mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        val mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager, this)
 
         // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
@@ -108,19 +111,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    inner class SectionsPagerAdapter : FragmentPagerAdapter {
-        var fm: FragmentManager
-
-        constructor(fm: FragmentManager) : super(fm) {
-            this.fm = fm
-        }
-
+    inner class SectionsPagerAdapter(val fm: FragmentManager, var mainActivity: MainActivity) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return when (position) {
-                0 -> MusicControlsFragment.newInstance()
+                0 -> MusicControlsFragment.newInstance().apply {
+                    onDownPressedListener = object : OnDownPressedListener {
+                        override fun onDownPressed() {
+                            mainActivity.container.setCurrentItem(1)
+                        }
+
+                    }
+                }
                 1 -> MusicListFragment.newInstance()
                 else -> MusicOverviewFragment.newInstance()
             }

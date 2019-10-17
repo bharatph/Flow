@@ -34,10 +34,7 @@ class MusicOverviewFragment : Fragment() {
          * number.
          */
         fun newInstance(): MusicOverviewFragment {
-            val fragment = MusicOverviewFragment()
-            val args = Bundle()
-            fragment.arguments = args
-            return fragment
+            return  MusicOverviewFragment()
         }
     }
 }

@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.aram.android.flow.listener.OnDownPressedListener
 import com.aram.android.flow.listener.OnSongSelectListener
 import com.aram.android.flow.model.Song
 import com.aram.android.flow.service.MusicService
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_music_controls.*
 import kotlinx.android.synthetic.main.music_view.*
 import kotlinx.android.synthetic.main.music_view.view.*
+import kotlinx.android.synthetic.main.song_info.*
 import kotlinx.android.synthetic.main.song_info.view.*
 import rm.com.audiowave.AudioWaveView
 import rm.com.audiowave.OnProgressListener
@@ -34,6 +36,7 @@ class MusicControlsFragment : Fragment() {
     private var musicService: MusicService? = null
     private var playIntent: Intent? = null
     private var musicBound = false
+    var onDownPressedListener: OnDownPressedListener? = null
 
     private lateinit var artistName : TextView
     private lateinit var songName : TextView
@@ -45,6 +48,9 @@ class MusicControlsFragment : Fragment() {
         artistName = rootView.textArtistName
         songName = rootView.textSongName
         audioWaveView = rootView.audioWaveView
+        rootView.navDownButton.setOnClickListener {
+            onDownPressedListener?.onDownPressed()
+        }
         audioWaveView.onProgressListener = object: OnProgressListener {
             override fun onStartTracking(progress: Float) {
             }
@@ -110,10 +116,7 @@ class MusicControlsFragment : Fragment() {
          * number.
          */
         fun newInstance(): MusicControlsFragment {
-            val fragment = MusicControlsFragment()
-            val args = Bundle()
-            fragment.arguments = args
-            return fragment
+            return MusicControlsFragment()
         }
     }
 }

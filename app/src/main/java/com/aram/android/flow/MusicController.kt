@@ -27,7 +27,17 @@ object MusicController {
             MediaStore.Audio.Media.DURATION
     )
 
-    var isPlaying = false
+    var playingSong: Song? = null
+
+    fun isPlaying(song: Song? = null) : Boolean {
+        if(playingSong == null){
+            return false
+        }
+        if(song == null){
+            return playingSong != null
+        }
+        return playingSong?.id == song.id
+    }
 
     fun getSongs(musicCursor: Cursor?) :  ArrayList<Song> {
         var songs = ArrayList<Song>()
