@@ -40,7 +40,7 @@ class AlbumCarouselAdapter : RecyclerView.Adapter<AlbumCarouselAdapter.AlbumCaro
         Glide.with(context)
                 .load(SongUtil.getAlbumArt(albums[position]))
                 .apply(reqOptions)
-                .into(holder?.albumImage)
+                .into(holder.albumImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumCarouselViewHolder {

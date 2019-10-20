@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.aram.android.flow.MusicController
+import com.aram.android.flow.R
 import com.aram.android.flow.R.id.*
 import com.aram.android.flow.R.layout.track_item
 import com.aram.android.flow.listener.RecyclerViewItemClickListener
@@ -15,20 +17,14 @@ import com.aram.android.flow.util.Time
 /**
  * Created by bharatvaj on 11-12-2017.
  */
-class SongListAdapter : RecyclerView.Adapter<SongListAdapter.SongListViewHolder> {
-
-    var songList: ArrayList<Song>
-    var context: Context
-    val clickListener: RecyclerViewItemClickListener
-
-    constructor(context: Context, songList: ArrayList<Song>, clickListener: RecyclerViewItemClickListener) {
-        this.context = context
-        this.songList = songList
-        this.clickListener = clickListener
-    }
+class SongListAdapter(private var context: Context, private var songList: ArrayList<Song>, private val clickListener: RecyclerViewItemClickListener) : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
         val song = songList[position]
+        if(MusicController.isPlaying(song)){
+            holder.itemView.background =
+                    context.getDrawable(R.drawable.item_bg_playing)
+        }
         holder.rootView.setOnClickListener {
             clickListener.onClick(holder.rootView, position)
         }

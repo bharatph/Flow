@@ -2,12 +2,9 @@ package com.aram.android.flow
 
 import android.content.Context
 import android.database.Cursor
-import android.net.Uri
 import android.provider.MediaStore
-import android.util.Log
 import com.aram.android.flow.model.Album
 import com.aram.android.flow.model.Song
-import com.aram.android.flow.service.MusicService
 
 /**
  * Created by bharatvaj on 17-12-2017.
@@ -39,7 +36,7 @@ object MusicController {
         return playingSong?.id == song.id
     }
 
-    fun getSongs(musicCursor: Cursor?) :  ArrayList<Song> {
+    private fun getSongsForCursor(musicCursor: Cursor?) :  ArrayList<Song> {
         var songs = ArrayList<Song>()
         if(musicCursor == null ) return songs
         val idCol = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)
@@ -68,7 +65,7 @@ object MusicController {
                 selection,
                 null,
                 MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
-        return getSongs(musicCursor)
+        return getSongsForCursor(musicCursor)
     }
 
     fun getSongsForAlbum(context: Context?, album: Album) : ArrayList<Song> {
@@ -79,6 +76,6 @@ object MusicController {
                 selection,
                 null,
                 MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
-        return getSongs(musicCursor)
+        return getSongsForCursor(musicCursor)
     }
 }

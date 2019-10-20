@@ -27,21 +27,18 @@ import shortbread.Shortcut
 class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var mc: MusicController
-    private var musicService: MusicService? = null
-    private var playIntent: Intent? = null
-    private var musicBound = false
-
-
     private val TAG = "MainActivity"
-    private val REQUEST_WRITE_EXTERNAL_STORAGE = 0
+
+    companion object {
+        private const val REQUEST_WRITE_EXTERNAL_STORAGE = 0
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<out String>,
                                             grantResults: IntArray) {
         when (requestCode) {
             REQUEST_WRITE_EXTERNAL_STORAGE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.i(TAG, "WRITE_EXTERNAL_STORAGE Granted")
                 } else {
                     Log.i(TAG, "WRITE_EXTERNAL_STORAGE Denied")
@@ -51,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun resolvePermissions() {
+    private fun resolvePermissions() {
         if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -60,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
             } else {
                 ActivityCompat.requestPermissions(this,
-                        Array<String>(1) { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                        Array(1) { Manifest.permission.WRITE_EXTERNAL_STORAGE },
                         REQUEST_WRITE_EXTERNAL_STORAGE)
             }
         }
@@ -80,38 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onDestroy() {
-        stopService(playIntent)
-        super.onDestroy()
-    }
-
-
-    private var musicConnection: ServiceConnection = object : ServiceConnection {
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-            musicBound = false
-        }
-
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            var binder: MusicService.MusicBinder = service as MusicService.MusicBinder
-            musicService = binder.getService()
-//            musicService!!.setList(MusicController.getAllSongs(service.getServ))
-            musicBound = true
-        }
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-//        mc = MusicController(this)
-        if (playIntent == null) {
-            playIntent = Intent(this, MusicService::class.java)
-            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE)
-            startService(playIntent)
-        }
-    }
-
-    inner class SectionsPagerAdapter(val fm: FragmentManager, var mainActivity: MainActivity) : FragmentPagerAdapter(fm) {
+    inner class SectionsPagerAdapter(fm: FragmentManager, var mainActivity: MainActivity) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
@@ -120,13 +86,12 @@ class MainActivity : AppCompatActivity() {
                 0 -> MusicControlsFragment.newInstance().apply {
                     onDownPressedListener = object : OnDownPressedListener {
                         override fun onDownPressed() {
-                            mainActivity.container.setCurrentItem(1)
+                            mainActivity.container.currentItem = 1
                         }
 
                     }
                 }
-                1 -> MusicListFragment.newInstance()
-                else -> MusicOverviewFragment.newInstance()
+                else -> MusicListFragment.newInstance()
             }
         }
 

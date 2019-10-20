@@ -83,12 +83,11 @@ class MusicControlsFragment : Fragment() {
                             .load(SongUtil.getAlbumArt(song))
                             .into(albumArtImageView)
                     //TODO get dynamic data from song object
-                    var barr : ByteArray = ByteArray(101)
+                    var barr = ByteArray(101)
                     for(i in 0..100){
                         barr[i] = Random().nextInt().toByte()
                     }
                     audioWaveView.setRawData(barr)
-                    //TODO END
                     }
             }
             musicBound = true
@@ -106,15 +105,6 @@ class MusicControlsFragment : Fragment() {
 
 
     companion object {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         fun newInstance(): MusicControlsFragment {
             return MusicControlsFragment()
         }

@@ -67,9 +67,9 @@ class MusicListFragment : Fragment() {
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            var binder: MusicService.MusicBinder = service as MusicService.MusicBinder
+            val binder: MusicService.MusicBinder = service as MusicService.MusicBinder
             musicService = binder.getService()
-            musicService?.setList(MusicController.getAllSongs(context))//TODO Tech dept
+//            musicService?.setList(MusicController.getAllSongs(context))//TODO
             musicBound = true
         }
 
@@ -79,17 +79,13 @@ class MusicListFragment : Fragment() {
         super.onStart()
         if (playIntent == null) {
             playIntent = Intent(context, MusicService::class.java)
-            context!!.bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE)
+            context?.bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE)
         }
     }
 
     companion object {
         fun newInstance(): MusicListFragment {
-
-            val fragment = MusicListFragment()
-            val args = Bundle()
-            fragment.arguments = args
-            return fragment
+            return MusicListFragment()
         }
     }
 }

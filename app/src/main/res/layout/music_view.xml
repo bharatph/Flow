@@ -18,8 +18,8 @@
         app:chunkSpacing="3dp"
         app:chunkRadius="2dp"
         app:waveColor="@android:color/darker_gray"
-        android:layout_marginRight="@dimen/horizontal_padding_medium"
-        android:layout_marginLeft="@dimen/horizontal_padding_medium"
+        android:layout_marginRight="@dimen/horizontal_constraint_large"
+        android:layout_marginLeft="@dimen/horizontal_constraint_large"
         android:layout_alignParentTop="true"
         android:layout_above="@id/timerTextView" />
     <TextView

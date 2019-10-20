@@ -10,22 +10,23 @@ import android.os.Binder
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
+import com.aram.android.flow.MusicController
 import com.aram.android.flow.listener.OnSongSelectListener
 import com.aram.android.flow.model.Song
+import java.lang.IllegalStateException
 
 /**
  * Created by Home on 21-01-2018.
  */
 public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
-    var song: Song? = null
     private val musicBinder: IBinder = MusicBinder()
     private var player: MediaPlayer = MediaPlayer()
     private var songs: ArrayList<Song>? = null
     private var songPos: Int = 0
     var onSongSelectListener: OnSongSelectListener? = null
 
-    public fun initMusicPlayer() {
+    private fun initMusicPlayer() {
         player.setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
         player.setAudioStreamType(AudioManager.STREAM_MUSIC)
         player.setOnPreparedListener(this)
@@ -43,25 +44,25 @@ public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlay
         this.songs = songs
     }
 
-    inner class MusicBinder : Binder {
-        constructor()
+    inner class MusicBinder : Binder() {
 
         fun getService(): MusicService {
             return this@MusicService
         }
     }
 
-    /**
-     * Called when the media file is ready for playback.
-     *
-     * @param mp the MediaPlayer that is ready for playback
-     */
     override fun onPrepared(mp: MediaPlayer) {
         mp.start()
     }
 
     fun playSong(song: Song) {
+        if(MusicController.playingSong == song){
+            player.prepareAsync()
+            return
+        }
         if (player.isPlaying){
+            MusicController.playingSong = null
+            player.stop()
             player.reset()
         }
         var trackUri: Uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, song.id)
@@ -71,7 +72,16 @@ public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlay
         } catch (e: Exception) {
             Log.e("MUSIC SERVICE", "Error setting data source", e)
         }
-        player.prepareAsync()
+        player.setOnPreparedListener {
+            MusicController.playingSong = song
+            player.start()
+        }
+        try {
+            player.prepareAsync()
+            MusicController.playingSong = song
+        } catch (ie : IllegalStateException){
+            Log.e("MUSIC SERVICE", "Cannot play the music file")
+        }
     }
 
 
@@ -79,12 +89,8 @@ public class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlay
         return false
     }
 
-    /**
-     * Called when the end of a media source is reached during playback.
-     *
-     * @param mp the MediaPlayer that reached the end of the file
-     */
     override fun onCompletion(mp: MediaPlayer?) {
+        //
     }
 
     override fun onBind(intent: Intent?): IBinder? {
